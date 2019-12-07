@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'TEST'}
+    agent {label 'node'}
     stages {
         stage('Checkout') { 
             steps {
@@ -9,7 +9,7 @@ pipeline {
         stage('Deploy') { 
             steps {
                 sh label: '', script: 'ansible-playbook -i hosts.ini site.yaml'
-                sh label: '', script: 'kubectl taint nodes ip-172-31-0-51 node-role.kubernetes.io/master-'
+                sh label: '', script: 'kubectl taint nodes ip-10-10-0-108 node-role.kubernetes.io/master-'
             }
         }
     }
