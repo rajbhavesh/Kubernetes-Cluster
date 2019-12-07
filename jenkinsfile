@@ -3,13 +3,13 @@ pipeline {
     stages {
         stage('Checkout') { 
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/rajbhavesh/Demo.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/rajbhavesh/Kubernetes-Cluster.git']]])
             }
         }
         stage('Deploy') { 
             steps {
-                sh label: '', script: 'chmod 755 install-kubernetes.sh'
-                sh label: '', script: './install-kubernetes.sh'
+                sh label: '', script: 'ansible-playbook -i hosts.ini site.yaml'
+                sh label: '', script: 'kubectl taint nodes ip-172-31-0-51 node-role.kubernetes.io/master-'
             }
         }
     }
